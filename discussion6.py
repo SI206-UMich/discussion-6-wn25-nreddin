@@ -3,17 +3,22 @@ import os
 
 
 def load_csv(f):
-    '''
-    Params: 
-        f, name or path or CSV file: string
+   with open(full_path, newline='') as csvfile:
+        reader = csv.reader(csvfile)
+        headers = next(reader) 
+        
+        for row in reader:
+            month = row[0] 
+            for i in range(1, len(headers)):
+                year = headers[i]
+                value = row[i]
 
-    Returns:
-        nested dict structure from csv
-        outer keys are (str) years, values are dicts
-        inner keys are (str) months, values are (str) integers
-    
-    Note: Don't strip or otherwise modify strings. Don't change datatypes from strings. 
-    '''
+                if year not in mynested_dict:
+                    mynested_dict[year] = {}
+
+                mynested_dict[year][month] = value  
+
+    return mynested_dict
 
     base_path = os.path.abspath(os.path.dirname(__file__))
     full_path = os.path.join(base_path, f)
